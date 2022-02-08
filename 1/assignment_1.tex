@@ -1,5 +1,7 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 %opening
 \title{Assignment 1}
@@ -18,5 +20,28 @@ Mathematically, this can be computed as follows (with $p_m=0.01$):
   \item Probability that A1 survives: $S_m(A1)=(1-p_m)^{o(A1)}=0.99^4\approx0.961$.
   \item Probability that A2 survives: $S_m(A2)=(1-p_m)^{o(A2)}=0.99^5\approx0.951$.
 \end{itemize}
+
+\section*{7}
+% the question says function, terminal set AND s-expression, but
+% s-expression is just the function and terminal set, no? I'm not sure if
+% I'm leaving something out, but I feel like this is fine -- daan
+\begin{itemize}
+  \item[(a)]
+    $T = \{x, y, z, \text{true}, \text{false}\}$. False isn't
+    \emph{strictly} necessary, but otherwise it would be a trivial
+    formula.
+
+    $F = \{\land, \lor, \leftrightarrow\}$. These all have arity 2.
+
+  \item[(b)]
+    $T = \mathbb{R} \cup \{x, z\}$. Technically $0.234$ and $0.789$ are in
+    $\mathbb{Q}$, so that would suffice, but taking the reals is more
+    standard.
+
+    $F = \{+, -, *\}$. These all have arity 2.
+
+\end{itemize}
+
+\section*{8}
 
 \end{document}
