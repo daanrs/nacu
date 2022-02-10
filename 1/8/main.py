@@ -86,7 +86,5 @@ def main(n):
     mstats = tools.MultiStatistics(fitness=stats_fit, size=stats_size)
 
     pop = toolbox.population(n=1000)
-    hof = tools.HallOfFame(1)
-    pop, log = algorithms.eaSimple(pop, toolbox, 0.7, 0, 50, halloffame=hof,
-                                   stats=mstats, verbose=True)
-    return mstats
+    # hof = tools.HallOfFame(1)
+    return algorithms.eaSimple(pop, toolbox, 0.7, 0, 50, stats=mstats)
