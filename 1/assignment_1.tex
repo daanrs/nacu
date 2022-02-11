@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
 
 %opening
 \title{Assignment 1}
@@ -10,6 +12,8 @@
 \begin{document}
 
 \maketitle
+Note: you can find the github repository at
+\url{github.com/dspijkers/nacu}.
 
 \section{}
 Schemata A1 has more wildcards than A2: $o(A1) < o(A2)$. Since both schemata have the same amount of bits, the chance of a non-wildcard bit flipping in A1 is less than the chance of that happening in A2.
@@ -43,5 +47,32 @@ Mathematically, this can be computed as follows (with $p_m=0.01$):
 \end{itemize}
 
 \section*{8}
+We used the DEAP python framework. Any individuals with errors (so, if it
+tried to divide by 0, or log -1) were given fitness $-\infty$. For the
+implementation see \emph{8/code.py}, and to generate the plots simply run
+\emph{8/plots.py}. (both in the github repository linked at the start of
+this file)
+
+\begin{figure}
+  \includegraphics[width=0.5\textwidth]{8/score_best}
+
+  \includegraphics[width=0.5\textwidth]{8/size_best}
+
+  \includegraphics[width=0.5\textwidth]{8/mean_size}
+\end{figure}
+
+%TODO: maybe add a proper reference using a reference manager.
+We do in fact see a undesirable phenomenon: bloat. Two techniques to
+prevent this are given in the Javed, Noman, and Fermand Gobet paper, which
+is also referenced in the lecture slides (page 47).
+
+These techniques are generationwide simplification (gws) and pruning. In
+gws every kth generation (for some k) we simplify the trees. Instead of
+producing offspring from mutation or crossover, we generate offspring by
+selecting subtrees.
+
+Pruning is a similar idea, but instead of doing it populationwide, we pick
+the top few percent fittest individuals, and replace them by the fittest
+out of some generated set of subtrees.
 
 \end{document}

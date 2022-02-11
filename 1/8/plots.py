@@ -11,27 +11,48 @@ mean_size, max_size, min_size = log.chapters["size"].select(
     "mean", "max", "min"
 )
 
-df = pd.DataFrame({
-    "best": fitness[:, 0],
-    "size": fitness[:, 1],
-    "mean_size": mean_size,
-    "max_size": max_size,
-    "min_size": min_size
+df = (
+    pd.DataFrame({
+        "fitness": fitness[:, 0],
+        "size": fitness[:, 1],
+        "mean_size": mean_size,
+        "max_size": max_size,
+        "min_size": min_size
 
-}).reset_index().rename(columns={"index": "gen"})
+    }).reset_index()
+    .rename(columns={"index": "gen"})
+    .assign(
+        # we minimized the positive value of the fitness, but in the
+        # exercise they defined it as a negative value
+        fitness=lambda x: -x["fitness"]
+    )
+)
 
-sns.relplot(
+
+sns.set_theme()
+
+g = sns.relplot(
     data = df, kind="line",
-    x = "gen", y = "best"
-).savefig("score_best.png")
+    x = "gen", y = "fitness"
+)
+g.set_axis_labels("Generation", "Fitness")
+g.ax.set_title("Fitness of best individual")
+g.savefig("score_best.png")
 
-sns.relplot(
+g = sns.relplot(
     data=df, kind="line",
     x="gen", y="size"
-).savefig("size_best.png")
+)
+g.set_axis_labels("Generation", "Size of best individual")
+g.ax.set_title("Size of best individual")
+g.savefig("size_best.png")
 
-#TODO: add max and min to it
-sns.relplot(
+g = sns.relplot(
     data=df, kind="line",
-    x="gen", y="mean_size"
-).savefig("mean_size.png")
+    x="gen", y="mean_size",
+)
+
+g.ax.fill_between(df['gen'].to_numpy(), df['max_size'], df['min_size'], alpha=0.2)
+g.set_axis_labels("Generation", "Mean size")
+g.ax.set_title("Mean size of all individuals")
+g.savefig("mean_size.png")
