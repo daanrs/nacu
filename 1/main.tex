@@ -1,13 +1,13 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
-\usepackage{pgf-pie} 
+\usepackage{pgf-pie}
 \usepackage{subfigure}
 \usepackage{hyperref}
 \usepackage{cite}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\documentclass{book}
+%\documentclass{book}
 \renewcommand\thesubsection{\Alph{subsection}}
 
 
@@ -18,9 +18,8 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}
-
-\end{abstract}
+\textbf{Note: you can find the github repository at}
+\url{github.com/dspijkers/nacu}.
 
 \section{Exercise 1}
 Schemata A1 has more wildcards than A2: $o(A1) < o(A2)$. Since both schemata have the same amount of bits, the chance of a non-wildcard bit flipping in A1 is less than the chance of that happening in A2.
@@ -44,20 +43,20 @@ _{0 \; if \; not}
 \subsection{}
 For the roulette wheel selection we calculate the probabilities of choosing an individual $x$ like this: $P(x) = f(x)/\sum_{x}f$
 \newline
-The results for $f(x)$ are in Table \ref{table:table2_1_1} and Figure \ref{fig:pie2_1_1}. The results for $f_1(x)$ are in Table \ref{table:table2_1_2} and Figure \ref{fig:pie2_1_2} 
+The results for $f(x)$ are in Table \ref{table:table2_1_1} and Figure \ref{fig:pie2_1_1}. The results for $f_1(x)$ are in Table \ref{table:table2_1_2} and Figure \ref{fig:pie2_1_2}
 
 
 \begin{table}[h!]
 \centering
 \begin{tabular}{| c | c | c |}
 \hline
-$x$ & $f(x)$ & $P(x)$ \\ 
+$x$ & $f(x)$ & $P(x)$ \\
 \hline
-2 & 4 & $4/29 = 0.14$ \\  
+2 & 4 & $4/29 = 0.14$ \\
 \hline
-3 & 9 & $9/29 = 0.31$ \\  
+3 & 9 & $9/29 = 0.31$ \\
 \hline
-4 & 16 & $16/29 = 0.55$ \\  
+4 & 16 & $16/29 = 0.55$ \\
 \hline
 $Total$ & 29 & 1 \\
 \hline
@@ -74,7 +73,7 @@ $Total$ & 29 & 1 \\
 \pie[radius=2]{14/x=2,
     31/x=3,
     55/x=4}
- 
+
 \end{tikzpicture}
 \caption{Pie chart for $f(x)$}
 \label{fig:pie2_1_1}
@@ -84,13 +83,13 @@ $Total$ & 29 & 1 \\
 \centering
 \begin{tabular}{| c | c | c |}
  \hline
- $x$ & $f_1(x)$ & $P(x)$ \\ 
+ $x$ & $f_1(x)$ & $P(x)$ \\
  \hline
- 2 & 24 & $24/89 = 0.27$ \\  
+ 2 & 24 & $24/89 = 0.27$ \\
  \hline
- 3 & 29 & $29/89 = 0.33$ \\  
+ 3 & 29 & $29/89 = 0.33$ \\
  \hline
- 4 & 36 & $36/89 = 0.4$ \\  
+ 4 & 36 & $36/89 = 0.4$ \\
  \hline
  $Total$ & 89 & 1 \\
 \hline
@@ -102,11 +101,11 @@ $Total$ & 29 & 1 \\
 \begin{figure}[h!]
     \centering
     \begin{tikzpicture}
-    
+
     \pie[radius=2]{27/x=2,
         33/x=3,
         40/x=4}
-        
+
     \end{tikzpicture}
     \caption{Pie chart for $f_1(x)$}
     \label{fig:pie2_1_2}
@@ -119,26 +118,27 @@ We can see that for scaled fitness, we have more equal probabilities for the ind
 
 
 \section{Exercise 4}
-We have explained in more detail this exercise in the notebook, but the results are in Figures \ref{a}, \ref{b} and \ref{c}:
+We have explained in more detail this exercise in the notebook (in the git
+repository), but the results are in Figures \ref{a}, \ref{b} and \ref{c}:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.65\textwidth]{8/output_a.png}
+    \includegraphics[width=0.65\textwidth]{4/output_a.png}
     \caption{Results of 4.a)}
     \label{a}
 \end{figure}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{8/output_b.png}
+    \includegraphics[width=\textwidth]{4/output_b.png}
     \caption{Results of 4.b)}
     \label{b}
-\end{figure}  
+\end{figure}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{8/output_c.png}
+    \includegraphics[width=\textwidth]{4/output_c.png}
     \caption{Results of 4.c)}
     \label{c}
-    
+
 \end{figure}
 
 \section{Exercise 5}
@@ -147,4 +147,55 @@ When we use a (1+5) ES, we consider major number of possible offsprings in each 
 \subsection{}
 if $\lambda $ is equal to the number of possibilities at each step, we could say that the (1+$\lambda$) ES is the same as a greedy algorithm, because it would be making the best optimal choice at each step. If $\lambda$ were smaller, it could not be guaranteed that it was a greedy algorithm.
 
+
+\section*{7}
+\begin{itemize}
+  \item[(a)]
+    $T = \{x, y, z, \text{true}, \text{false}\}$. False isn't
+    \emph{strictly} necessary, but otherwise it would be a trivial
+    formula.
+
+    $F = \{\land, \lor, \leftrightarrow\}$. These all have arity 2.
+
+  \item[(b)]
+    $T = \mathbb{R} \cup \{x, z\}$. Technically $0.234$ and $0.789$ are in
+    $\mathbb{Q}$, so that would suffice, but taking the reals is more
+    standard.
+
+    $F = \{+, -, *\}$. These all have arity 2.
+
+\end{itemize}
+
+\section*{8}
+See figure \ref{fig8}. We used the DEAP python framework. Any individuals with
+errors (so, if it tried to divide by 0, or log -1) were given fitness
+$-\infty$. For the implementation see \emph{8/code.py}, and to generate
+the plots simply run \emph{8/plots.py}. (both in the github repository
+linked at the start of this file)
+
+\begin{figure}
+  \caption{Exercise 8}
+  \label{fig8}
+  \includegraphics[width=0.5\textwidth]{8/score_best}
+
+  \includegraphics[width=0.5\textwidth]{8/size_best}
+
+  \includegraphics[width=0.5\textwidth]{8/mean_size}
+\end{figure}
+
+%TODO: maybe add a proper reference using a reference manager.
+We do in fact see a undesirable phenomenon: bloat. Two techniques to
+prevent this are given in the Javed, Noman, and Fermand Gobet paper, which
+is also referenced in the lecture slides (page 47).
+
+These techniques are generationwide simplification (gws) and pruning. In
+gws every kth generation (for some k) we simplify the trees. Instead of
+producing offspring from mutation or crossover, we generate offspring by
+selecting subtrees.
+
+Pruning is a similar idea, but instead of doing it populationwide, we pick
+the top few percent fittest individuals, and replace them by the fittest
+out of some generated set of subtrees.
+
+\end{document}
 \end{document}
