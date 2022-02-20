@@ -1,0 +1,63 @@
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{pgf-pie}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+%\documentclass{book}
+\renewcommand\thesubsection{\Alph{subsection}}
+
+
+%opening
+\title{Assignment 1}
+\author{Daan Spijkers, s1011382\\ Tomás Catalán López, s1081589\\ Willem Lambooy, s1009584}
+
+\begin{document}
+\maketitle
+
+\textbf{Note: you can find the GitHub repository at}
+\url{github.com/dspkio/nacu}.
+
+\subsection*{4}
+
+\begin{itemize}
+
+  \item[(a)]
+    No, it is not. Our space of valid solutions is $\{\{e_1, e_2\}, \{e_2,
+    e_3\}, \{e_3, e_4\}\}$. We see that $e_1$ and $e_4$ occur only once,
+    and $e_2$, $e_3$ occur twice.
+
+  \item[(b)]
+    Not always. Our goal is finding the optimal solution as efficiently as
+    possible, if a bias is helpful for that then it is not harmful. If,
+    for example, in the example given in (a) the weights for $e_2$ and
+    $e_3$ were \emph{less} than the weights for $e_1$ and $e_4$, then this
+    would be a positive thing.
+
+\end{itemize}
+
+\subsection*{5}
+The intuitive understanding is that ants going up will get a path straight
+to the destination, while ants going down will get stuck, and have longer
+paths. Even though the shortest path (length $5$) is down, it is possible
+that the ants will converge on the upper path (length $8$).
+
+We can make a gross estimation of the expected length of the upper and
+lower paths. Up is clearly 8, but lower is more difficult to calculate.
+However, we can calculate what the probability is of a path shorter or
+equal to 8, as well as larger than 8, and provide a lower bound.
+
+Given we initially go down, we have an approximately $\frac{1}{3} \times
+(\frac{1}{2})^2 = \frac{1}{12}$ chance of the shortest path, of length 5.
+Length 6 is also $\frac{1}{12}$, but length 7 is $\frac{1}{12} +
+\frac{1}{24}$. Similarly, length 8 is $\frac{1}{24}$, and $>8$ is then $1
+- \frac{4}{12} = \frac{2}{3}$. So, the expected length is bounded below:
+$E(\text{down}) \ge \frac{2}{3} \times 9 + 2.125 = 8.125$. Which is larger
+than 8, so it is quite possible for things to converge on the top path.
+This is still random, obviously, and so it will depend on the randomness
+which path it will actually find.
+
+\end{document}
