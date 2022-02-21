@@ -45,19 +45,42 @@ to the destination, while ants going down will get stuck, and have longer
 paths. Even though the shortest path (length $5$) is down, it is possible
 that the ants will converge on the upper path (length $8$).
 
-We can make a gross estimation of the expected length of the upper and
-lower paths. Up is clearly 8, but lower is more difficult to calculate.
-However, we can calculate what the probability is of a path shorter or
-equal to 8, as well as larger than 8, and provide a lower bound.
+If we calculate the expected length of the paths, then we can use that as
+an indication for what the ant colony could converge on (the shorter the
+expected length, the more pheromone). For the up path,
+it is obvious that $E(up) = 9$.
 
-Given we initially go down, we have an approximately $\frac{1}{3} \times
-(\frac{1}{2})^2 = \frac{1}{12}$ chance of the shortest path, of length 5.
-Length 6 is also $\frac{1}{12}$, but length 7 is $\frac{1}{12} +
-\frac{1}{24}$. Similarly, length 8 is $\frac{1}{24}$, and $>8$ is then $1
-- \frac{4}{12} = \frac{2}{3}$. So, the expected length is bounded below:
-$E(\text{down}) \ge \frac{2}{3} \times 9 + 2.125 = 8.125$. Which is larger
-than 8, so it is quite possible for things to converge on the top path.
-This is still random, obviously, and so it will depend on the randomness
-which path it will actually find.
+For the down path, we can provide a lower bound by enumerating the
+probabilities for all paths shorter than 9, and leaving all other paths
+with length \emph{at least 10}.
+\begin{equation}
+  6  P(6) + 7  P(7) + 8  P(8) + 9  P(9) + 10(1 - P(\le9)) \le E(down)
+\end{equation}
+
+In the next section we assume that we initially go down. Describing the
+enumeration is a bit cumbersome, but please bear with us. For the shortest
+path of length 6 we need to choose the correct middle one at the 3rd
+vertex (out of 3 choices), and then choose correctly again at the 4th and
+5th vertex. This gives it $P(6) = \frac{1}{3} \times \frac{1}{2} \times
+\frac{1}{2} = \frac{1}{12}$.
+
+Length 7 is the exact same. For length 8 we can have a similar one of
+probability $\frac{1}{12}$, but another way is to have the same initial
+path of length 6, but then "miss" the 4th one, and then choose
+correctly twice after that. This gives it $P(8) = \frac{1}{12} +
+\frac{1}{48}$. Similarly, $P(9) = \frac{1}{48}$, as we can only get it by
+"missing" once in the 7 length path. Now, $P(>9) = 1 - \frac{2}{12} -
+\frac{2}{48} = \frac{19}{24}$, and the lower bound is:
+
+\begin{equation}
+  10 = \frac{6}{12} + \frac{7}{12} + 8(\frac{1}{12} + \frac{1}{48}) +
+  \frac{9}{48} + 10 \times \frac{19}{24} \le E(down)
+\end{equation}
+
+So, the expected length for paths going down is at least $1$ higher
+than the expected length for paths going up. This means it is quite
+possible for things to converge on the up path. This is still random,
+obviously, and so it will depend on the randomness and exact parameters of
+the algorithm which path it will actually find.
 
 \end{document}
