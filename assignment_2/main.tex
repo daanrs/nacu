@@ -12,7 +12,7 @@
 
 
 %opening
-\title{Assignment 1}
+\title{Assignment 2}
 \author{Daan Spijkers, s1011382\\ Tomás Catalán López, s1081589\\ Willem Lambooy, s1009584}
 
 \begin{document}
@@ -21,7 +21,30 @@
 \textbf{Note: you can find the GitHub repository at}
 \url{github.com/dspkio/nacu}.
 
-\subsection*{4}
+\section{Exercise 1}
+\subsection{}
+The code for this is in the notebook Assignment2\_1. After running it we get that the fitness of particles $x_1$, $x_2$ and $x_3$ is 730.35, 807.91 and 829.01
+
+\subsection{}
+In figure \ref{fig:1l} we can see how much each point has moved. For more detail, look into the notebook.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/1.png}
+    \caption{Scatterplot of $x_1$, $x_2$ and $x_3$ after 1 iteration}
+    \label{fig:1l}
+\end{figure}
+
+\subsection{}
+The momentum has the function to "tune" the position of the particles. If it's $<1$, the best particle will be decreasing its velocity while it's approaxing a better position. If it's $>1$, the particle will be accelerating constantly.
+
+\subsection{}
+If we have a higher w, the particles will be moving faster, so it'd be easier to find the optimum if it's far away from the initial position, but it'll be hard to adjust it perfectly in a few iterations, so the computation will take longer.
+On the other hand if we have a low momentum the particles would be able to adjust well to the optimum, but they may stop before reaching it (We can see this in Exercise 2.c).
+
+\section{Exercise 2}
+
+\section*{4.}
 
 \begin{itemize}
 
@@ -39,7 +62,7 @@
 
 \end{itemize}
 
-\subsection*{5}
+\section*{5.}
 The intuitive understanding is that ants going up will get a path straight
 to the destination, while ants going down will get stuck, and have longer
 paths. Even though the shortest path (length $5$) is down, it is possible
