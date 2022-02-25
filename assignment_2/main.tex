@@ -84,6 +84,47 @@ $x^{*} = x_i \rightarrow v_i = w*v_i +0 +0 \rightarrow v_i = w*v_i$
 
 The particle at that point is having its velocity decreased because of w, so it ends up stopping (In the former case before reaching the global optimum)
 
+\section{}
+\begin{itemize}
+
+  \item[(a)], (b), and (c):
+    Please see \emph{3/main.py} for the implementation.
+
+  \item[(d)]
+    The results we got were as follows:
+    \begin{align*}
+      &\text{kmeans on artificial dataset 1} &= 0.595 \\
+      &\text{PSO on artificial dataset 1} &= 0.565 \\
+      &\text{kmeans on iris} &= 0.648 \\
+      &\text{PSO on iris} &= 0.717 \\
+    \end{align*}
+    We see that Kmeans outperforms PSO on the artificial dataset, but
+    underperforms on the iris data.
+
+  \item[(e)]
+    See figure \ref{fig:3a} for PSO and figure \ref{fig:3b} for kmeans.
+    The different \emph{colours} indicate the clusters found by the algorithm,
+    while the \emph{shade}(dark or light) indicates the true clusters.
+
+    It does appear as if PSO creates better clusters than Kmeans, in this
+    case.
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.65\textwidth]{3/pso.png}
+      \caption{PSO}
+      \label{fig:3a}
+    \end{figure}
+
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.65\textwidth]{3/k_means.png}
+      \caption{Kmeans}
+      \label{fig:3b}
+    \end{figure}
+
+\end{itemize}
+
 \section*{4.}
 
 \begin{itemize}
