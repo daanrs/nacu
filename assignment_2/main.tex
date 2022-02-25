@@ -43,6 +43,46 @@ If we have a higher w, the particles will be moving faster, so it'd be easier to
 On the other hand if we have a low momentum the particles would be able to adjust well to the optimum, but they may stop before reaching it (We can see this in Exercise 2.c).
 
 \section{Exercise 2}
+\subsection*{A. \& B.}
+For the code, see the notebook \emph{assignment2\_1}.
+See figure \ref{fig:2_1} for (a) and (b). With the first configuration,
+the particle converges to the position $x = 15.0$, and for the second
+configuration, the particle converges to the position $x = -100.34$.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.65\textwidth]{images/2.png}
+  \caption{2(a) and 2(b)}
+  \label{fig:2_1}
+\end{figure}
+
+\subsection*{C.}
+If we consider a single member swarm, the formula for calculating the
+velocity of a particle i becomes like this:
+
+It's only 1 particle so the personal best of the particle is also the
+global best so:
+\begin{align}
+  & x_{i}^{*} = x^* \\
+  & v_i = w*v_i + \alpha _1 r_1 (x^{*} - x_i) + \alpha _2 r_2 (x^{*} - x_i)
+\end{align}
+
+So if we have a w<1, that is always decreasing the velocity that the
+particle has at any moment. We can see what would happen in the previous
+plot in figure \ref{fig:2c}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.65\textwidth]{images/2c.png}
+  \caption{2(c)}
+  \label{fig:2c}
+\end{figure}
+
+At first we can see a "bounce", because $\alpha _1 r_1 (x^{*} - x_i) + \alpha _2 r_2 (x^{*} - x_i)$ will be opossite to the velocity that it has at that moment, and afterwards the particle keeps moving to the optimum, so for each iteration we have:
+
+$x^{*} = x_i \rightarrow v_i = w*v_i +0 +0 \rightarrow v_i = w*v_i$
+
+The particle at that point is having its velocity decreased because of w, so it ends up stopping (In the former case before reaching the global optimum)
 
 \section*{4.}
 
