@@ -102,7 +102,7 @@ class PSOSwarm:
         self.best_clustering = None
         self.plot_data = []
 
-    def run(self, t_max, prints=False):
+    def run(self, t_max, prints=False, plot=True):
         for t in range(t_max):
             for p in self.particles:
                 p.init_clusters()
@@ -121,15 +121,17 @@ class PSOSwarm:
             if prints:
                 print("Fitness at time", t, ':', self.global_best[1])
             self.plot_data.append(self.global_best[1])
-            plt.plot(self.plot_data, color='r')
+            if plot:
+                plt.plot(self.plot_data, color='r')
 
         if prints:
             print("\nOptimal solution:", self.global_best[0])
-        print("Optimal fitness:", self.global_best[1])
+            print("Optimal fitness:", self.global_best[1])
         # diff = max(self.plot_data) - min(self.plot_data)
         # plt.ylim(min(self.plot_data)-diff/10, max(self.plot_data)+diff/10)
-        plt.show()
-        return self.best_clustering
+        if plot:
+            plt.show()
+        return self.plot_data, self.best_clustering
 
 
 class KMeans:
@@ -174,15 +176,17 @@ class KMeans:
             plt.show()
         return self.plot_data, self.clusters
 
-    def runNTimes(self, t_max, N):
+    def runNTimes(self, t_max, N, plot=True):
         plot_datas = []
         for i in range(N):
             k = KMeans(self.data_vectors, self.dims, self.N_CLUSTERS)
-            plot_datas.append(k.run(t_max, plot=False))
+            plot_datas.append(k.run(t_max, plot=False)[0])
         mean = np.mean(plot_datas, axis=0)
-        print("Optimal fitness:", mean[-1])
-        plt.plot(mean, color='r')
-        plt.show()
+        if plot:
+            print("Optimal fitness:", mean[-1])
+            plt.plot(mean, color='r')
+            plt.show()
+        return mean
 
 
 # Only works for 2 dimensional vectors (like Artificial Dataset 1)
@@ -193,7 +197,6 @@ def clusterPlot(clusters, data_vectors):
         s2 = [x[1] for x in cl]
         plt.plot(s1, s2, 'o', color=c)
     truePlot(data_vectors)
-    plt.show()
 
 
 def truePlot(data_vectors):
@@ -213,18 +216,36 @@ def truePlot(data_vectors):
 
 if __name__ == "__main__":
     # num_particles = 10
-    t_max = 100
+    T_MAX = 100
+    TRIALS = 30
 
-    data_vectors, nd, no, nc = genAD1()
-    # data_vectors, nd, no, nc = getIrisData()
+    data_vectors, nd, _, nc = genAD1()
+    # data_vectors, nd, _, nc = getIrisData()
 
     s = PSOSwarm(data_vectors, nd, nc)
-    clusters = s.run(t_max)
+    clusters = s.run(T_MAX)[1]
     clusterPlot(clusters, data_vectors)
 
-    # k = KMeans(data_vectors, nd, nc)
-    # clusters = k.run(t_max)[1]
-    # clusterPlot(clusters, data_vectors)
-    # k.runNTimes(t_max, 10)
+    k = KMeans(data_vectors, nd, nc)
+    clusters = k.run(T_MAX)[1]
+    clusterPlot(clusters, data_vectors)
+    # k.runNTimes(T_MAX, 10)
+
+    RUN = "PSO"
+    # RUN = "KMeans"
+
+    print("Running %s for %d trials with %d iterations" % (RUN, TRIALS, T_MAX))
+
+    plot_datas = []
+    for i in range(TRIALS):
+        if RUN == "PSO":
+            s = PSOSwarm(data_vectors, nd, nc)
+            pd, _ = s.run(T_MAX, plot=False)
+        else:
+            k = KMeans(data_vectors, nd, nc)
+            pd = k.runNTimes(T_MAX, 10, plot=False)
+        plot_datas.append(pd)
+
+    print("Optimal fitness:", np.mean(plot_datas, axis=0)[-1])
 
 
