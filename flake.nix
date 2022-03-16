@@ -36,7 +36,7 @@
         devShell = myAppEnv.env.overrideAttrs (oldAttrs: {
           buildInputs = with pkgs; [
             poetry
-            python39Packages.ipython
+            python39Packages.jupyterlab
           ];
         });
       });
