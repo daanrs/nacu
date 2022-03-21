@@ -23,7 +23,7 @@ def main():
         df_lang = other(p)
         df = pd.concat((df_lang, df_english))
         score = roc_auc_score(y_true=df["truth"], y_score=df["score"])
-        print(f"file={p}, score={score}")
+        print(f"file={p.name}, score={score}")
 
 
 def english(filename):
