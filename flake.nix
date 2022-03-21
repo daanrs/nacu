@@ -12,6 +12,11 @@
         pkgs = nixpkgs.legacyPackages.${system};
 
          customOverrides = self: super: {
+             threadpoolctl = super.threadpoolctl.overridePythonAttrs (
+               old: {
+                 format = "flit";
+               }
+             );
         };
 
         app = pkgs.poetry2nix.mkPoetryApplication {
@@ -37,6 +42,8 @@
           buildInputs = with pkgs; [
             poetry
             python39Packages.jupyterlab
+
+            jdk
           ];
         });
       });
