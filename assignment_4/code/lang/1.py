@@ -5,7 +5,9 @@ from pathlib import Path
 
 
 def main():
-
+    """
+    Calculate and print AUC scores for the language data
+    """
     scores_path = Path("lang1_scores")
     for i in [1, 4, 9]:
         eng_p = scores_path / f"{i}_english.txt"
@@ -27,6 +29,9 @@ def main():
 
 
 def english(filename):
+    """
+    Read a file containing english data
+    """
     return pd.read_csv(
         filename,
         header=None
@@ -34,6 +39,9 @@ def english(filename):
 
 
 def other(filename):
+    """
+    Read a file containing non-english data
+    """
     return pd.read_csv(
         filename,
         header=None,
