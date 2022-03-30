@@ -25,35 +25,44 @@ def main(k, n, r, p, fast, write):
     write: bool
         whether to write the dataframe with scores to a file
     """
+    # read and split training data into chunks
     df_train = read_data(list(p.glob("*.train"))[0])
     df_train = explode_syscall(df_train, k, fast)
 
+    # save the training data to a file, to give to the jar as input
     train_file = p / "train.csv"
     df_train["syscall"].to_csv(train_file, index=False, header=False)
 
+    # read and split test data into chunks
     df_test = read_test(p)
     df_test = explode_syscall(df_test, k, fast)
-    df_test = df_test.assign(syscall=lambda f: f["syscall"].astype(str)).dropna()
+    df_test = df_test.assign(syscall=lambda f: f["syscall"].astype(str))
 
     alphabet = list(p.glob("*.alpha"))[0]
 
+    # run the java jar
     q = [
         "java", "-jar", "../negsel2.jar", "-alphabet",
         f"file://{alphabet}", "-self", str(train_file), "-n", str(n),
         "-r", str(r), "-c", "-l",
     ]
-
     scores = sp.run(
         q,
         text=True,
         input="\n".join(df_test["syscall"]),
         capture_output=True
-    ).stdout.split("\n")
+    ).stdout.split()
 
-    dfs = pd.DataFrame(scores[:-1]).astype(float)
+    # create scores dataframe
+    dfs = pd.DataFrame(scores).astype(float)
 
+    # concat scores to truth
     df = pd.concat((dfs, df_test), axis=1).rename(columns={0: "score"})
+
+    # combine the scores for the different chunks of an entry
     df = df.groupby("index").agg({"score": np.mean, "truth": np.any})
+
+    # compute AUC
     score = roc_auc_score(y_true=df["truth"], y_score=df["score"])
     print(f"file={p.name}, score={score}, n={n}, r={r}, chunksize={k}")
 
