@@ -135,13 +135,36 @@ if __name__ == "__main__":
     # TODO: change these paramaters to get a decent score, then set
     # fast=False and write=True to run it on the complete data, and to
     # save the dataframe
-    main(10, 10, 4, p, fast=True, write=False)
+    # main(10, 10, 4, p, fast=True, write=False)
+
+    scores_cert = pd.DataFrame(
+        {
+            "auc": main(n, n, r, p, fast=True, write=False),
+            "n": n,
+            "r": r
+        }
+        for n in range(8, 13)
+        for r in range(2, 7)
+    ).round(4)
+    scores_cert.to_csv("scores_cert.csv", index=False)
 
     # TODO: change these paramaters to get a decent score, then set
     # fast=False and write=True to run it on the complete data, and to
     # save the dataframe
     p = Path("snd-unm")
-    main(10, 10, 4, p, fast=True, write=False)
+    # main(10, 10, 4, p, fast=True, write=False)
+
+    scores_unm = pd.DataFrame(
+        {
+            "auc": main(n, n, r, p, fast=True, write=False),
+            "n": n,
+            "r": r
+        }
+        for n in range(8, 13)
+        for r in range(2, 7)
+    ).round(4)
+
+    scores_unm.to_csv("scores_unm.csv", index=False)
 
     # OTHER NOTES:
         # we use nonoverlapping substrings of a fixed length k
