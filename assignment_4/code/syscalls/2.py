@@ -5,7 +5,7 @@ import subprocess as sp
 from pathlib import Path
 from sklearn.metrics import roc_auc_score
 
-def main(k, n, r, p, fast, write):
+def main(k, n, r, p, fast, write, i):
     """
     Compute AUC for the files in folder p.
 
@@ -34,7 +34,7 @@ def main(k, n, r, p, fast, write):
     df_train["syscall"].to_csv(train_file, index=False, header=False)
 
     # read and split test data into chunks
-    df_test = read_test(p)
+    df_test = read_test(i, p)
     df_test = explode_syscall(df_test, k, fast)
     df_test = df_test.assign(syscall=lambda f: f["syscall"].astype(str))
 
@@ -64,24 +64,24 @@ def main(k, n, r, p, fast, write):
 
     # compute AUC
     score = roc_auc_score(y_true=df["truth"], y_score=df["score"])
-    print(f"file={p.name}, score={score}, n={n}, r={r}, chunksize={k}")
+    print(f"file={p.name}, score={score}, n={n}, r={r}, testset={i}")
 
     if write:
         df.to_csv(p / "result.csv", index=False)
     return score
 
-def read_test(p):
+def read_test(i, p):
     """
     Read test files in folder p
     """
     df_t = pd.concat([
         read_data(t)
-        for t in p.glob("*.test")
+        for t in p.glob(f"*{i}.test")
     ]).reset_index(drop=True)
 
     df_l = pd.concat([
         read_label(l)
-        for l in p.glob("*.labels")
+        for l in p.glob(f"*{i}.labels")
     ]).reset_index(drop=True)
 
     df = pd.concat((df_t, df_l), axis=1)
@@ -139,12 +139,14 @@ if __name__ == "__main__":
 
     scores_cert = pd.DataFrame(
         {
-            "auc": main(n, n, r, p, fast=True, write=False),
+            "auc": main(n, n, r, p, fast=True, write=False, i=i),
             "n": n,
-            "r": r
+            "r": r,
+            "i": i
         }
         for n in range(8, 13)
         for r in range(2, 7)
+        for i in range(1, 4)
     ).round(4)
     scores_cert.to_csv("scores_cert.csv", index=False)
 
@@ -156,12 +158,14 @@ if __name__ == "__main__":
 
     scores_unm = pd.DataFrame(
         {
-            "auc": main(n, n, r, p, fast=True, write=False),
+            "auc": main(n, n, r, p, fast=True, write=False, i=i),
             "n": n,
-            "r": r
+            "r": r,
+            "i": i
         }
         for n in range(8, 13)
         for r in range(2, 7)
+        for i in range(1, 4)
     ).round(4)
 
     scores_unm.to_csv("scores_unm.csv", index=False)
