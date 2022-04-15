@@ -11,6 +11,4 @@ dfv = (
     .reindex(["mean", "amax", "amin", "prod"], level=0, axis=1)
 )
 
-df_filled = pd.concat((df, dfv), axis=1)
-
-df_filled.to_csv("1_filled.csv", index=False)
+dfv.to_csv("1_filled.csv", index=False)

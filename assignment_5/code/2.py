@@ -1,5 +1,11 @@
 import math
 
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+sns.set_theme()
+
 rad = 0.85
 doc = 0.8
 stu = 0.6
@@ -44,11 +50,25 @@ def majority_correct(n, p):
 # 0.814
 stu_correct = majority_correct(19, 0.6)
 
-# TODO: c
+# c
+df = pd.DataFrame(
+    {
+        'jury': jury_size,
+        'competence': competence,
+        'probability': majority_correct(jury_size, competence)
+    }
+    for competence in np.arange(0.55, 1.05, 0.1)
+    for jury_size in np.arange(1, 22, 2)
+)
+
+g = sns.relplot(
+    data=df, x="jury", y="probability", hue="competence", kind="line"
+)
+
+g.savefig("2c.pdf")
+
 
 # d
-
-
 def min_size_group(desired_prob, p):
     i = 1
     prob = p
