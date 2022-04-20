@@ -12,43 +12,54 @@ stu = 0.6
 
 # a
 
-# 0.512
 three_doc = doc ** 3
+print(f"2a: Three doctors correct = {three_doc:.3f}")
 
-# 0.384
 two_doc = (3 * doc * doc * (1-doc))
 
-# 0.896
 at_least_two_doc = two_doc + three_doc
-
-doc_correct = at_least_two_doc
+print(f"2a: At least 2 doctors correct = {at_least_two_doc:.3f}")
 
 
 # b
 def binom(n, k, p):
+    """
+    Calculate P(X=k) for binomial distribution B(n, p)
+    """
     return math.comb(n, k) * (p ** k) * ((1-p) ** (n-k))
 
 
-def binom_gt(n, k, p):
+def binom_ge(n, k, p):
+    """
+    Calaculate P(X>=k) for binomial distribution B(n, p)
+    """
     prob = 0
     for i in range(k, n+1):
         prob += binom(n, i, p)
     return prob
 
 
-# we assume ties are solved with a random coinflip
 def majority_correct(n, p):
+    """
+    Calculate probability that the majority has the correct answer for
+    B(n, p).
+
+    If n is even we assume ties are split with a random
+    coinflip.
+    """
+    # n is even
     if n % 2 == 0:
         return (
             binom(n, n // 2, p) * 0.5
-            + binom_gt(n, n // 2 + 1, p)
+            + binom_ge(n, n // 2 + 1, p)
         )
+    # n is odd
     else:
-        return binom_gt(n, n // 2 + 1, p)
+        return binom_ge(n, n // 2 + 1, p)
 
 
-# 0.814
 stu_correct = majority_correct(19, 0.6)
+print(f"2b: Majority students correct = {stu_correct:.3f}")
 
 # c
 df = pd.DataFrame(
@@ -69,14 +80,20 @@ g.savefig("2c.pdf")
 
 
 # d
-def min_size_group(desired_prob, p):
+def min_size_jury(desired_prob, p):
+    """
+    The minimum size of a jury with competency p to have a desired
+    probability.
+    """
     i = 1
     prob = p
     while prob <= desired_prob:
-        i += 1
+        i += 2
         prob = majority_correct(i, p)
     return i
 
 
-# 39
-min_size_students = min_size_group(doc_correct, stu)
+min_size_students = min_size_jury(at_least_two_doc, stu)
+print(f"2d: Minimum student jury size = {min_size_students}")
+print("2d: Probability student jury is correct = "
+      + f"{majority_correct(min_size_students, stu):.3f}")
